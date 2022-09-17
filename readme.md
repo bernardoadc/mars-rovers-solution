@@ -1,5 +1,23 @@
 # Mars Rover in JavaScript
 
+> a CLI script that interpret rover instructions
+
+## Project setup
+
+### Running
+
+Pass instructions as a string argument, with line breaks typed as "\n”. E.g.: `npm start "1 1\n0 0 N\nMRL"`.
+
+See "Context" for more details.
+
+### Automated Testing
+
+Run with `npm run test`
+
+You can write new tests, creating files in "tests" folder with ".test.js" extension. Import and use `run(input)` function from `utils.js`. You can also use helper functions `multilineInput` and `adjustOutput` (check `utils.js`)
+
+## Context
+
 A squad of robotic rovers are to be landed by NASA on a plateau on Mars.
 
 This plateau, which is curiously rectangular, must be navigated by the rovers so that their on-board cameras can get a complete view of the surrounding terrain to send back to Earth.
@@ -10,7 +28,7 @@ In order to control a rover, NASA sends a simple string of letters. The possible
 
 Assume that the square directly North from (x, y) is (x, y 1).
 
-## Input
+### Input
 
 The first line of input is the upper-right coordinates of the plateau, the lower-left coordinates are assumed to be 0,0.
 
@@ -20,7 +38,6 @@ The position is made up of two integers and a letter separated by spaces, corres
 
 Each rover will be finished sequentially, which means that the second rover won’t start to move until the first one has finished moving.
 
-## Output
+### Output
 
 The output for each rover should be its final co-ordinates and heading.
-
