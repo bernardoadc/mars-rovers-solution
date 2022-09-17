@@ -3,7 +3,7 @@ import Rover from './src/rover.js'
 
 function validate (input) {
   if (!input.length) {
-    console.warn('Nothing to do - no instructions passed')
+    console.info('Nothing to do - no instructions passed')
     process.exit(0)
   }
   if (input.length < 3 || input.length % 2 !== 1) { // test minimum input needed: plateau definition line + 2 lines of rover instructions

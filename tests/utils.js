@@ -1,8 +1,9 @@
 import { exec } from 'child_process'
 
-export async function run (input) {
+export async function run (input, cmd) {
   return new Promise(function (resolve, reject) {
-    exec(`node index.js "${input}"`, function (error, stdout, stderr) { // don't use `npm start` since it will output aditional text
+    if (!cmd) cmd = `node index.js "${input}"`
+    exec(cmd, function (error, stdout, stderr) { // don't use `npm start` since it will output aditional text
       if (error) reject(error)
       if (stderr) reject(stderr)
       if (stdout) resolve(stdout)
@@ -17,7 +18,7 @@ export function multilineInput (input) {
 
 // A little detail that you cannot forget
 export function adjustOutput (output) {
-  return output + '\n'
+  return output.replace(/^Command failed: node index\.js.*/, '') + '\n'
 }
 
 export default run
