@@ -2,7 +2,7 @@ import { exec } from 'child_process'
 
 export async function run (input) {
   return new Promise(function (resolve, reject) {
-    exec(`node index.js "${input}"`, function (error, stdout, stderr) {
+    exec(`node index.js "${input}"`, function (error, stdout, stderr) { // don't use `npm start` since it will output aditional text
       if (error) reject(error)
       if (stderr) reject(stderr)
       if (stdout) resolve(stdout)
