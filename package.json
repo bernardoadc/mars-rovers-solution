@@ -1,6 +1,6 @@
 {
   "name": "mars-rovers-solution",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "voyager's portal code assessment",
   "main": "index.js",
   "bin": {
