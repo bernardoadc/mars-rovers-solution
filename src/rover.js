@@ -1,3 +1,7 @@
+import chalk from 'chalk'
+import Joi from 'joi'
+import assert from './helpers/joi-assert-custom.helper.js'
+
 export default class Rover {
   static HEADINGS = ['N', 'E', 'S', 'W']
   static ROTATE = { L: -1, R: 1 }
@@ -11,8 +15,14 @@ export default class Rover {
   }
 
   constructor (x, y, heading) {
-    this.x = x
-    this.y = y
+    const errors =
+      assert(x, Joi.number().integer().required().label('X coordinate')) +
+      assert(y, Joi.number().integer().required().label('Y coordinate')) +
+      assert(heading, Joi.valid(...Rover.HEADINGS).required().label('Cardinal point'))
+    if (errors) console.error(`${chalk.red('Error defining new rover!')}\n${chalk.yellow(errors)}`) || process.exit(1)
+
+    this.x = parseInt(x)
+    this.y = parseInt(y)
     this.heading = Rover.HEADINGS.indexOf(heading) // heading as array index
   }
 
@@ -29,8 +39,8 @@ export default class Rover {
   }
 
   executeInstructions (instructions) {
-    const unknownInstructions = instructions.filter(instruction => !Rover.INSTRUCTIONS.includes(instruction))
-    if (unknownInstructions.length) throw new Error(`Instruction ${unknownInstructions[0]} isn't known`) // display first unknown instruction only
+    const errors = assert(instructions, Joi.array().min(1).items(Joi.valid(...Rover.INSTRUCTIONS).label('Instructions')), 'isn\'t known.')
+    if (errors) console.error(`${chalk.red('Error defining instructions!')}\n${chalk.yellow(errors)}`) || process.exit(1)
 
     for (const instruction of instructions) {
       if (Rover.ROTATIONS.includes(instruction)) this.rotate(instruction)

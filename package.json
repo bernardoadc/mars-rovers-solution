@@ -4,7 +4,7 @@
   "description": "voyager's portal code assessment",
   "main": "index.js",
   "bin": {
-    "package": "./index.js"
+    "mars-rovers": "./index.js"
   },
   "type": "module",
   "directories": {
@@ -26,6 +26,10 @@
     "url": "https://github.com/bernardoadc/mars-rovers-solution/issues"
   },
   "homepage": "https://github.com/bernardoadc/mars-rovers-solution#readme",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "joi": "^17.6.0"
+  },
   "devDependencies": {
     "ava": "^4.3.3",
     "c8": "^7.12.0",
