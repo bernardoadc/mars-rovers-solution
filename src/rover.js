@@ -35,24 +35,29 @@ export default class Rover {
     if (this.heading < 0) this.heading += Rover.HEADINGS.length // return to HEADINGS end when passed from start
   }
 
-  checkPlateauBoundaries () {
+  canNavigate (navX, navY) {
     if (
-      this.x < this.plateau.minX ||
-      this.x > this.plateau.maxX ||
-      this.y < this.plateau.minY ||
-      this.y > this.plateau.maxY
-    ) {
-      console.error(`${chalk.red('Error! Rover has passed plateau\'s boundaries')}`)
-      process.exit(1)
-    }
+      (this.x + navX) < this.plateau.minX ||
+      (this.x + navX) > this.plateau.maxX ||
+      (this.y + navY) < this.plateau.minY ||
+      (this.y + navY) > this.plateau.maxY
+    ) throw new Error('Error! Rover would pass plateau\'s boundaries')
   }
 
   navigate () {
     const heading = Rover.HEADINGS[this.heading] // get heading as cardinal point (letter)
-    this.x += Rover.NAVIGATIONS[heading].x
-    this.y += Rover.NAVIGATIONS[heading].y
+    const navX = Rover.NAVIGATIONS[heading].x
+    const navY = Rover.NAVIGATIONS[heading].y
 
-    this.checkPlateauBoundaries()
+    try {
+      this.canNavigate(navX, navY)
+
+      this.x += navX
+      this.y += navY
+    } catch (e) {
+      console.error(`${chalk.red(e.message)}`)
+      process.exit(1)
+    }
   }
 
   executeInstructions (instructions) {
