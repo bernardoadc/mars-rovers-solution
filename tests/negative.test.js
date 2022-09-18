@@ -65,7 +65,7 @@ test('wrong types', async function (t) {
 
 test('has passed plateau\'s boundaries', async function (t) {
   const input = '1 1\\n0 0 N\\nMMM'
-  const expectedOutput = 'Error! Rover has passed plateau\'s boundaries'
+  const expectedOutput = 'Error! Rover would pass plateau\'s boundaries'
 
   try {
     await run(input)
