@@ -4,7 +4,7 @@ export default function (value, schema, mentionWrongValueWith) {
   if (error) return error.details // eslint-disable-line curly
     .map(function (d) {
       let msg = '➤ ' // bullet
-      if (mentionWrongValueWith) msg += `"${d.context.value}" ${mentionWrongValueWith} `
+      if (mentionWrongValueWith) msg += `"${d.context.value}" ${mentionWrongValueWith} ` // mentions specific wrong value
       msg += d.message.replaceAll('"', '') // allows better/custom phrasing
 
       return msg

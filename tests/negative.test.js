@@ -35,6 +35,20 @@ test('unknown instructions', async function (t) {
   await t.throwsAsync(run(input))
 })
 
+test('missing values', async function (t) {
+  let input = '1\\n0 0 N\\nMRL'
+  await t.throwsAsync(run(input))
+
+  input = '1 1\\n0 N\\nMRL'
+  await t.throwsAsync(run(input))
+
+  input = '1 1\\n0 0\\nMRL'
+  await t.throwsAsync(run(input))
+
+  input = '1 1\\n0 0 N\\n'
+  await t.throwsAsync(run(input))
+})
+
 test('wrong types', async function (t) {
   let input = '1 x\\n0 0 N\\nMRL'
   await t.throwsAsync(run(input))

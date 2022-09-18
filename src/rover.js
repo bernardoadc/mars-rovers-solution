@@ -39,7 +39,7 @@ export default class Rover {
   }
 
   executeInstructions (instructions) {
-    const errors = assert(instructions, Joi.array().min(1).items(Joi.valid(...Rover.INSTRUCTIONS).label('Instructions')), 'isn\'t known.')
+    const errors = assert(instructions, Joi.array().min(1).items(Joi.valid(...Rover.INSTRUCTIONS).label('Instructions')).label('Instructions'), 'isn\'t known.')
     if (errors) console.error(`${chalk.red('Error defining instructions!')}\n${chalk.yellow(errors)}`) || process.exit(1)
 
     for (const instruction of instructions) {
