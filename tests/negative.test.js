@@ -63,10 +63,15 @@ test('wrong types', async function (t) {
   await t.throwsAsync(run(input))
 })
 
-test('has passed plateau\'s extension', async function (t) {
+test('has passed plateau\'s boundaries', async function (t) {
   const input = '1 1\\n0 0 N\\nMMM'
-  const expectedOutput = adjustOutput('Oh oh, you instructed to go beyond plateau\'s extension - luckily the rover had it covered!')
+  const expectedOutput = 'Error! Rover has passed plateau\'s boundaries'
 
-  const output = (await run(input)).split('\n').pop() // ultima linha do resultado
-  t.is(output, expectedOutput)
+  try {
+    await run(input)
+  } catch (e) {
+    const output = e.message.split('\n').splice(-2, 1).pop() // last outputed (written) line
+    t.is(output, expectedOutput)
+  }
+  await t.throwsAsync(run(input))
 })
