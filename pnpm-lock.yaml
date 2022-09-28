@@ -12,10 +12,12 @@ specifiers:
   eslint-plugin-node: ^11.1.0
   eslint-plugin-promise: ^6.0.1
   joi: ^17.6.0
+  joi-error-msg: ^1.0.2
 
 dependencies:
   chalk: 5.0.1
   joi: 17.6.0
+  joi-error-msg: 1.0.2
 
 devDependencies:
   ava: 4.3.3
@@ -1487,6 +1489,10 @@ packages:
       html-escaper: 2.0.2
       istanbul-lib-report: 3.0.0
     dev: true
+
+  /joi-error-msg/1.0.2:
+    resolution: {integrity: sha512-qyO12MDpLCFjQyW8B1CGhYGrr3DDFOrOURv9asdq4NfjiP7gYaCDsK4X2ETWDdnUHhmCeJ/dscE10FIZSPxR/Q==}
+    dev: false
 
   /joi/17.6.0:
     resolution: {integrity: sha512-OX5dG6DTbcr/kbMFj0KGYxuew69HPcAE3K/sZpEV2nP6e/j/C0HV+HNiBPCASxdx5T7DMoa0s8UeHWMnb6n2zw==}

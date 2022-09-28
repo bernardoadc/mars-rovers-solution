@@ -1,6 +1,8 @@
 import chalk from 'chalk'
 import Joi from 'joi'
-import assert from './helpers/joi-assert-custom.helper.js'
+import { assert, multiAssert, validate, config } from 'joi-error-msg'
+
+config({ titleColor: chalk.red, color: chalk.yellow })
 
 export default class Rover {
   static HEADINGS = ['N', 'E', 'S', 'W']
@@ -15,18 +17,23 @@ export default class Rover {
   }
 
   constructor (x, y, heading, plateau) {
-    const errors =
-      assert(x, Joi.number().integer().required().label('X coordinate')) +
-      assert(y, Joi.number().integer().required().label('Y coordinate')) +
-      assert(heading, Joi.valid(...Rover.HEADINGS).required().label('Cardinal point')) +
-      assert(plateau, Joi.object().required().label('Plateau definition'))
-    if (errors) console.error(`${chalk.red('Error defining new rover!')}\n${chalk.yellow(errors)}`) || process.exit(1)
+    try {
+      multiAssert('Error defining new rover!',
+        validate(x, Joi.number().integer().required().label('X coordinate')),
+        validate(y, Joi.number().integer().required().label('Y coordinate')),
+        validate(heading, Joi.valid(...Rover.HEADINGS).required().label('Cardinal point')),
+        validate(plateau, Joi.object().required().label('Plateau definition'))
+      )
 
-    this.x = parseInt(x)
-    this.y = parseInt(y)
-    this.heading = Rover.HEADINGS.indexOf(heading) // heading as array index
+      this.x = parseInt(x)
+      this.y = parseInt(y)
+      this.heading = Rover.HEADINGS.indexOf(heading) // heading as array index
 
-    this.plateau = plateau
+      this.plateau = plateau
+    } catch (e) {
+      console.error(e.message)
+      process.exit(1)
+    }
   }
 
   rotate (rotation) {
@@ -61,12 +68,18 @@ export default class Rover {
   }
 
   executeInstructions (instructions) {
-    const errors = assert(instructions, Joi.array().min(1).items(Joi.valid(...Rover.INSTRUCTIONS).label('Instructions')).label('Instructions'), 'isn\'t known.')
-    if (errors) console.error(`${chalk.red('Error defining instructions!')}\n${chalk.yellow(errors)}`) || process.exit(1)
+    try {
+      assert(instructions, Joi.array().min(1).items(
+        Joi.valid(...Rover.INSTRUCTIONS).label('Instructions')
+      ).label('Instructions'), 'isn\'t known.', 'Error defining instructions!')
 
-    for (const instruction of instructions) {
-      if (Rover.ROTATIONS.includes(instruction)) this.rotate(instruction)
-      else this.navigate()
+      for (const instruction of instructions) {
+        if (Rover.ROTATIONS.includes(instruction)) this.rotate(instruction)
+        else this.navigate()
+      }
+    } catch (e) {
+      console.error(e.message)
+      process.exit(1)
     }
   }
 
