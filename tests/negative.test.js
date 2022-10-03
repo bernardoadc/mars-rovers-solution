@@ -17,8 +17,14 @@ test('random instructions', async function (t) {
   await t.throwsAsync(run(input))
 })
 
-test('no rover instructions', async function (t) {
+test('no rover definition', async function (t) {
   const input = '1 1'
+
+  await t.throwsAsync(run(input))
+})
+
+test('no rover instructions', async function (t) {
+  const input = '1 1\\n0 0 N\\n'
 
   await t.throwsAsync(run(input))
 })

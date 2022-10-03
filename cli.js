@@ -30,7 +30,7 @@ function defineRover (roverPosition, roverInstructions, plateau) {
   return new Rover(startX, startY, startHeading, plateau)
 }
 
-export default function init (input) {
+export default function run (input) {
   try {
     validate(input)
 
