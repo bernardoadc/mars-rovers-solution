@@ -75,3 +75,29 @@ test('has passed plateau\'s boundaries', async function (t) {
   }
   await t.throwsAsync(run(input))
 })
+
+test('Too many args for plateau definition', async function (t) {
+  const input = '1 2 3 4\\n0 0 N\\nLR'
+  const expectedOutput = 'Too many args for plateau definition'
+
+  try {
+    await run(input)
+  } catch (e) {
+    const output = e.message.split('\n').splice(-2, 1).pop() // last outputed (written) line
+    t.is(output, expectedOutput)
+  }
+  await t.throwsAsync(run(input))
+})
+
+test('Too many args for rover definition', async function (t) {
+  const input = '1 2\\n0 0 N 1 1 S\\nLR'
+  const expectedOutput = 'Too many args for rover definition'
+
+  try {
+    await run(input)
+  } catch (e) {
+    const output = e.message.split('\n').splice(-2, 1).pop() // last outputed (written) line
+    t.is(output, expectedOutput)
+  }
+  await t.throwsAsync(run(input))
+})
