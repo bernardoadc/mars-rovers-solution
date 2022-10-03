@@ -71,6 +71,9 @@ test('wrong types', async function (t) {
 
 test('has passed plateau\'s boundaries', async function (t) {
   const input = '1 1\\n0 0 N\\nMMM'
+
+  await t.throwsAsync(run(input))
+
   const expectedOutput = 'Error! Rover would pass plateau\'s boundaries'
 
   try {
@@ -79,6 +82,12 @@ test('has passed plateau\'s boundaries', async function (t) {
     const output = e.message.split('\n').splice(-2, 1).pop() // last outputed (written) line
     t.is(output, expectedOutput)
   }
+  await t.throwsAsync(run(input))
+})
+
+test('defined beyond plateau\'s boundaries', async function (t) {
+  const input = '1 1\\n2 2 N\\nLR'
+
   await t.throwsAsync(run(input))
 })
 

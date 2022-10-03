@@ -22,7 +22,10 @@ export default class Rover {
         validate(x, Joi.number().integer().required().label('X coordinate')),
         validate(y, Joi.number().integer().required().label('Y coordinate')),
         validate(heading, Joi.valid(...Rover.HEADINGS).required().label('Cardinal point')),
-        validate(plateau, Joi.object().required().label('Plateau definition'))
+
+        validate(plateau, Joi.object().required().label('Plateau definition')),
+        validate(x, Joi.number().min(plateau.minX).max(plateau.maxX).label('X coordinate'), 'would pass plateau\'s boundaries - '),
+        validate(y, Joi.number().min(plateau.minY).max(plateau.maxY).label('Y coordinate'), 'would pass plateau\'s boundaries - ')
       )
 
       this.x = parseInt(x)
